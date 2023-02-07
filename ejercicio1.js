@@ -112,7 +112,7 @@ $(document).ready(function(){
         //creamos las secciones con DOM
 
         //Para productos
-        let apartadoProductos=document.createElement("fieldset");
+        let apartadoProductos=document.getElementById("apartadoProductos");
 
         let leyendaProductos=document.createElement("legend");
         leyendaProductos.innerHTML="<h2>Productos</h2>";
@@ -121,15 +121,13 @@ $(document).ready(function(){
         //--------------------------------------------------
 
         //Para testimonios
-        let apartadoTestimonios=document.createElement("fieldset");
+        let apartadoTestimonios=document.getElementById("apartadoTestimonios");
         let leyendaTestimonios=document.createElement("legend");
         leyendaTestimonios.innerHTML="<h2>Testimonios</h2>";
         apartadoTestimonios.appendChild(leyendaTestimonios);
 
         //--------------------------------------------------
-        
-        //salto de linea
-        let salto=document.createElement("br");
+    
 
         //rellenamos las secciones
 
@@ -164,9 +162,6 @@ $(document).ready(function(){
 
         }
 
-        //añadimos la sección al html junto a un salto de línea
-        document.body.appendChild(apartadoProductos);
-        document.body.appendChild(salto);
 
         //Sección Testimonios
         for(let j=0;j<testimonios.length;j++){
@@ -186,10 +181,56 @@ $(document).ready(function(){
 
         }
 
-        document.body.appendChild(apartadoTestimonios);
 
     });
-    
 
+    $("#arriba").click(function(){
+        $("html").animate({scrollTop:0},800);
+    });
 
 });
+
+//Apartado 4
+
+let vistos=[];
+
+window.onload=()=>{
+    
+    setInterval(comienzaPeticion,3000);
+
+}
+
+let httpRequest;
+
+function comienzaPeticion(){
+
+    httpRequest = new XMLHttpRequest();
+
+    httpRequest.onreadystatechange=trataPeticion;
+    httpRequest.open("GET","listado.json")
+
+    httpRequest.send();
+}
+
+function trataPeticion(){
+
+    if (httpRequest.readyState === XMLHttpRequest.DONE) {
+        if (httpRequest.status === 200) {
+
+            let traduccion_json=httpRequest.responseText;
+            let json=JSON_parse(traduccion_json);
+
+            for(let i=0;i<3;i++){
+
+            }
+
+
+
+            document.body.innerHTML=todosCorreos;
+              
+
+        } else {
+          alert("There was a problem with the request.");
+        }
+    }
+}
