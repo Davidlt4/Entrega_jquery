@@ -1,0 +1,34 @@
+{
+    "productos": [
+        {
+            "titulo":"Zapatillas Adidas",
+            "texto":"Zapatillas para correr",
+            "link":"www.adidas.com",
+            "img":"./img/adidas.png"
+        },
+        {
+            "titulo":"Vans",
+            "texto":"Zapatillas vans negras",
+            "link":"www.vans.com",
+            "img":"./img/vans.png"
+        }
+    ],
+
+    "testimonios":[
+        {
+            "nombre":"David García",
+            "texto":"Muy bueno",
+            "fecha":"07/02/2023"
+        },
+        {
+            "nombre":"Jose Pérez",
+            "texto":"Mal :(",
+            "fecha":"09/04/2023"
+        },
+        {
+            "nombre":"Francisco Ruiz",
+            "texto":"Magnífico",
+            "fecha":"17/01/2023"
+        }
+    ]
+}
