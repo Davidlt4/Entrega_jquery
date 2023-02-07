@@ -184,53 +184,63 @@ $(document).ready(function(){
 
     });
 
+    //Apartado 4
+
+    let visto=[];
+    let testimonioAjax=document.getElementById("testimoniosAjax");
+    function esta(elemento){
+        let esta=false;
+        for(let j=0;j<visto.length;j++){
+            if(visto[j]==elemento){
+                esta=true;
+            }
+        }
+        return esta;
+    }
+
+    $.ajax({
+        
+        url:"listado.json",
+        type:"GET",
+        dataType:"json",
+        error: $('#testimoniosAjax').html('No se ha podido leer el archivo Json'),
+        success: function(json){
+            let cont=0;
+            while(cont<3){
+                
+                let rand=json.testimonios[Math.floor((Math.random() * (json.testimonios.length - 0) + 0))];
+    
+                if(!esta(rand)){
+
+                    cont++;
+                    visto.push(rand);
+                    console.log(visto);
+                
+                    let nombre=document.createElement("h2");
+                    nombre.textContent=rand.nombre;
+        
+                    let texto=document.createElement("p");
+                    texto.textContent=rand.texto;
+        
+                    let fecha=document.createElement("p");
+                    fecha.textContent=rand.fecha;
+        
+                    testimonioAjax.appendChild(nombre);
+                    testimonioAjax.appendChild(texto);
+                    testimonioAjax.appendChild(fecha);
+            
+                    
+                }
+            }
+        }
+    });
+
+
+    //Apartado 7
     $("#arriba").click(function(){
         $("html").animate({scrollTop:0},800);
     });
 
 });
 
-//Apartado 4
 
-let vistos=[];
-
-window.onload=()=>{
-    
-    setInterval(comienzaPeticion,3000);
-
-}
-
-let httpRequest;
-
-function comienzaPeticion(){
-
-    httpRequest = new XMLHttpRequest();
-
-    httpRequest.onreadystatechange=trataPeticion;
-    httpRequest.open("GET","listado.json")
-
-    httpRequest.send();
-}
-
-function trataPeticion(){
-
-    if (httpRequest.readyState === XMLHttpRequest.DONE) {
-        if (httpRequest.status === 200) {
-
-            let traduccion_json=httpRequest.responseText;
-            let json=JSON_parse(traduccion_json);
-
-            for(let i=0;i<3;i++){
-
-            }
-
-
-
-            document.body.innerHTML=todosCorreos;
-              
-
-        } else {
-          alert("There was a problem with the request.");
-        }
-    }
-}
