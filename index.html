@@ -8,7 +8,17 @@
     <script src="ejercicio1.js" defer></script>
     <title>Entrega Jquery</title>
     <style>
-        
+        #arriba{
+            width: 20%;
+            position: fixed;
+            z-index: 1;
+            bottom: 20px;
+            right: 20px;
+            background-color: black;
+            color: white;
+            border-radius: 5px;
+            
+        }
     </style>
 </head>
 <body>
@@ -43,15 +53,39 @@
 
     </fieldset>
 
-    <fieldset id="apartadoTestimonios">
 
+    <table id="vistaTablaProductos" hidden>
+        <tbody id="testTabla">
+            <tr>
+                <td><b>Título</b></td>
+                <td><b>Texto</b></td>
+                <td><b>Link</b></td>
+                <td><b>Imagen</b></td>
+            </tr>
+        </tbody>
+    </table><br>
+
+    
+
+    <h2>Testimonios Aleatorios</h2>
+
+    <table id="tablaTestimonio" hidden>
+        <tbody id="testTab">
+            <tr>
+                <td><b>Nombre</b></td>
+                <td><b>Texto</b></td>
+                <td><b>Fecha</b></td>
+            </tr>
+        </tbody>
+    </table><br>
+    
+    <fieldset id="testimoniosAjax">
+    
     </fieldset><br>
 
     <button id="arriba">Vamos Arriba!</button>
+    <button id="cambiarVista">Cambiar Vista</button><br><br>
 
-    <fieldset id="testimoniosAjax">
-        <legend><h2>Testimonios Aleatorios</h2></legend>
-    </fieldset>
 
 </body>
 </html>

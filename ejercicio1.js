@@ -102,12 +102,13 @@ $(document).ready(function(){
     });
 
 
+    //--------------------------------------------------
+
     //Apartado 2(leemos productos desde un archivo json) y 3(testimonios)
 
     $.getJSON("listado.json", function(listado){
 
         let productos=listado.productos;
-        let testimonios=listado.testimonios;
 
         //creamos las secciones con DOM
 
@@ -119,15 +120,6 @@ $(document).ready(function(){
         apartadoProductos.appendChild(leyendaProductos);
 
         //--------------------------------------------------
-
-        //Para testimonios
-        let apartadoTestimonios=document.getElementById("apartadoTestimonios");
-        let leyendaTestimonios=document.createElement("legend");
-        leyendaTestimonios.innerHTML="<h2>Testimonios</h2>";
-        apartadoTestimonios.appendChild(leyendaTestimonios);
-
-        //--------------------------------------------------
-    
 
         //rellenamos las secciones
 
@@ -160,24 +152,41 @@ $(document).ready(function(){
             apartadoProductos.appendChild(link);
             apartadoProductos.appendChild(img);
 
-        }
+            //---------------Tabla---------------
+
+            //Tbody de la tabla para añadir los campos
+            let tbody=document.getElementById("testTabla");
+
+            //creamos los elementos a añadir a la tabla
+            let tr=document.createElement("tr");
+            let tdTitulo=document.createElement("td");
+            tdTitulo.textContent=productos[i].titulo;
 
 
-        //Sección Testimonios
-        for(let j=0;j<testimonios.length;j++){
+            let tdTexto=document.createElement("td");
+            tdTexto.textContent=productos[i].texto;
 
-            let nombre=document.createElement("h2");
-            nombre.textContent=testimonios[j].nombre;
+            let tdLink=document.createElement("td");
+            let url=document.createElement("a");
+            url.href=productos[i].link;
+            url.textContent=productos[i].link;
+            tdLink.appendChild(url);
 
-            let texto=document.createElement("p");
-            texto.textContent=testimonios[j].texto;
+            let tdImg=document.createElement("td");
+            let imagen=document.createElement("img");
+            imagen.src=productos[i].img;
+            imagen.width=100;
+            imagen.height=100;
+            tdImg.appendChild(imagen);
 
-            let fecha=document.createElement("p");
-            fecha.textContent=testimonios[j].fecha;
+            tr.appendChild(tdTitulo);
+            tr.appendChild(tdTexto);
+            tr.appendChild(tdLink);
+            tr.appendChild(tdImg);
 
-            apartadoTestimonios.appendChild(nombre);
-            apartadoTestimonios.appendChild(texto);
-            apartadoTestimonios.appendChild(fecha);
+            tbody.appendChild(tr);
+
+            //-------------------------------------
 
         }
 
@@ -187,7 +196,7 @@ $(document).ready(function(){
     //Apartado 4
 
     let visto=[];
-    let testimonioAjax=document.getElementById("testimoniosAjax");
+
     function esta(elemento){
         let esta=false;
         for(let j=0;j<visto.length;j++){
@@ -198,48 +207,125 @@ $(document).ready(function(){
         return esta;
     }
 
-    $.ajax({
-        
-        url:"listado.json",
-        type:"GET",
-        dataType:"json",
-        error: $('#testimoniosAjax').html('No se ha podido leer el archivo Json'),
-        success: function(json){
-            let cont=0;
-            while(cont<3){
-                
-                let rand=json.testimonios[Math.floor((Math.random() * (json.testimonios.length - 0) + 0))];
-    
-                if(!esta(rand)){
+    let div=document.createElement("div");
+    let testTbody=document.getElementById("testTab");
 
-                    cont++;
-                    visto.push(rand);
-                    console.log(visto);
-                
-                    let nombre=document.createElement("h2");
-                    nombre.textContent=rand.nombre;
+    function limpiar(){
         
-                    let texto=document.createElement("p");
-                    texto.textContent=rand.texto;
-        
-                    let fecha=document.createElement("p");
-                    fecha.textContent=rand.fecha;
-        
-                    testimonioAjax.appendChild(nombre);
-                    testimonioAjax.appendChild(texto);
-                    testimonioAjax.appendChild(fecha);
-            
+        if(!$('#testimoniosAjax').is(':hidden')){
+            $('#testimoniosAjax').hide("slow");
+        }else{
+            $('#tablaTestimonio').hide("slow");
+        }
+
+        $('#testimoniosAjax div').empty();
+        $('#tablaTestimonio tbody').empty();
+
+        if(!$('#testimoniosAjax').is(':hidden')){
+            $('#testimoniosAjax').show("slow");
+        }else{
+            $('#tablaTestimonio').show("slow");
+        }
+    }
+
+    function tablaRand(){
+
+
+        $.ajax({
+
+            url:"listado.json",
+            type:"GET",
+            dataType:"json",
+            error: $('#testimoniosAjax').html('No se ha podido leer el archivo Json'),
+            success: function(json){
+
+                let cont=0;
+                while(cont<3){
                     
+                    let rand=json.testimonios[Math.floor((Math.random() * (json.testimonios.length - 0) + 0))];
+        
+                    if(!esta(rand)){
+    
+                        cont++;
+                        visto.push(rand);
+                        
+                        //Nombre para testimonios 
+    
+                        let trtest=document.createElement("tr");
+    
+                        let nombre=document.createElement("h2");
+                        nombre.textContent=rand.nombre;
+    
+                        let tdNombre=document.createElement("td");
+                        tdNombre.textContent=rand.nombre;
+    
+                        //Texto para testimonios
+            
+                        let texto=document.createElement("p");
+                        texto.textContent=rand.texto;
+    
+                        let tdTexto=document.createElement("td");
+                        tdTexto.textContent=rand.texto;
+    
+                        //Fecha para testimonios
+            
+                        let fecha=document.createElement("p");
+                        fecha.textContent=rand.fecha;
+    
+                        let tdFecha=document.createElement("td");
+                        tdFecha.textContent=rand.fecha;
+                        
+                        div.appendChild(nombre);
+                        div.appendChild(texto);
+                        div.appendChild(fecha);
+    
+                        //Para la tabla
+    
+                        trtest.appendChild(tdNombre);
+                        trtest.appendChild(tdTexto);
+                        trtest.appendChild(tdFecha);
+            
+                        testTbody.appendChild(trtest);
+    
+                        $('#testimoniosAjax').html(div);
+                 
+                    }
                 }
             }
+        });
+        visto=[];
+    }
+
+    //Apartado 5
+    
+    $('#cambiarVista').click(function(){
+        if(!$('#apartadoProductos').is(':hidden')){
+            $('#apartadoProductos').hide("slow");
+            $('#testimoniosAjax').hide("slow");
+            $('#vistaTablaProductos').show("slow"); 
+            $('#tablaTestimonio').show("slow"); 
+        }else{
+            $('#apartadoProductos').show("slow");
+            $('#testimoniosAjax').show("slow");
+            $('#vistaTablaProductos').hide("slow"); 
+            $('#tablaTestimonio').hide("slow");
         }
     });
 
 
     //Apartado 7
+
     $("#arriba").click(function(){
         $("html").animate({scrollTop:0},800);
     });
+
+
+    //Apartado 9
+
+    tablaRand();
+    setInterval(limpiar,10000);
+    setInterval(tablaRand,10000);
+    
 
 });
 
