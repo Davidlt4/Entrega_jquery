@@ -15,9 +15,12 @@ $(document).ready(function(){
     let texto=$('#texto');
     let fecha=$('#fecha');
     let enviar=$('#enviar');
+
+    //Guardamos los campos en un array
     let campos=[nombre,tel,dni,texto,fecha,enviar];
 
 
+    //Guardamos el año actual en una variable para poder validar que el año que se ha pasado es este año y no uno anterior
     const anioActual = new Date().getFullYear();
 
     function validarFecha(fecha){
@@ -128,7 +131,7 @@ $(document).ready(function(){
         for(let i=0;i<productos.length;i++){
 
             //Creamos el titulo
-            let titulo=document.createElement("h2");
+            let titulo=document.createElement("h3");
             titulo.textContent=productos[i].titulo;
 
             //Creamos el texto
@@ -210,6 +213,12 @@ $(document).ready(function(){
     let div=document.createElement("div");
     let testTbody=document.getElementById("testTab");
 
+
+    //Función limpiar para el Apartado 8 y Apartado 9
+
+    //Esta función limpia los campos que se estén mostrando
+    //Y los oculta o muestra lentamente en función de esto 
+    //para así dar el efecto de cargarse(Apartado 8)
     function limpiar(){
         
         if(!$('#testimoniosAjax').is(':hidden')){
@@ -218,6 +227,8 @@ $(document).ready(function(){
             $('#tablaTestimonio').hide("slow");
         }
 
+        //Vacía los elementos para volver a cargarlos
+        //con el intertevalo(Apartado 9)
         $('#testimoniosAjax div').empty();
         $('#tablaTestimonio tbody').empty();
 
@@ -253,7 +264,7 @@ $(document).ready(function(){
     
                         let trtest=document.createElement("tr");
     
-                        let nombre=document.createElement("h2");
+                        let nombre=document.createElement("h3");
                         nombre.textContent=rand.nombre;
     
                         let tdNombre=document.createElement("td");
@@ -299,6 +310,7 @@ $(document).ready(function(){
     //Apartado 5
     
     $('#cambiarVista').click(function(){
+
         if(!$('#apartadoProductos').is(':hidden')){
             $('#apartadoProductos').hide("slow");
             $('#testimoniosAjax').hide("slow");

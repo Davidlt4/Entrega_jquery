@@ -7,21 +7,11 @@
     <script src="https://code.jquery.com/jquery-3.6.3.js" defer></script>
     <script src="ejercicio1.js" defer></script>
     <title>Entrega Jquery</title>
-    <style>
-        #arriba{
-            width: 20%;
-            position: fixed;
-            z-index: 1;
-            bottom: 20px;
-            right: 20px;
-            background-color: black;
-            color: white;
-            border-radius: 5px;
-            
-        }
-    </style>
+    <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
+
+    <header><h1>Proyecto Jquery</h1></header>
 
     <fieldset>
 
@@ -55,13 +45,16 @@
 
 
     <table id="vistaTablaProductos" hidden>
-        <tbody id="testTabla">
+        <thead>
             <tr>
                 <td><b>Título</b></td>
                 <td><b>Texto</b></td>
                 <td><b>Link</b></td>
                 <td><b>Imagen</b></td>
             </tr>
+        </thead>
+        <tbody id="testTabla">
+            
         </tbody>
     </table><br>
 
@@ -70,15 +63,18 @@
     <h2>Testimonios Aleatorios</h2>
 
     <table id="tablaTestimonio" hidden>
-        <tbody id="testTab">
+        <thead>
             <tr>
                 <td><b>Nombre</b></td>
                 <td><b>Texto</b></td>
                 <td><b>Fecha</b></td>
             </tr>
+        </thead>
+        <tbody id="testTab">
+            
         </tbody>
     </table><br>
-    
+
     <fieldset id="testimoniosAjax">
     
     </fieldset><br>
@@ -86,6 +82,9 @@
     <button id="arriba">Vamos Arriba!</button>
     <button id="cambiarVista">Cambiar Vista</button><br><br>
 
-
+    <footer>
+        <p>Realizado por David López Tapias</p>
+        <p>Github: <a target="_blank" href="https://github.com/Davidlt4/Entrega_jquery">Davidlt4</a></p>
+    </footer>
 </body>
 </html>
