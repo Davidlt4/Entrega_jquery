@@ -8,6 +8,25 @@
 
 $(document).ready(function(){
 
+    //Apartado 6
+    function cargarJson(){
+        $.ajax({
+            url:"listado.json",
+            type:"GET",
+            dataType:"json",
+            error: function(){
+                alert('No se ha podido cargar el archivo json');
+                setTimeout(cargarJson,5000);
+            },
+            success: function(){
+                productos();
+                tablaRand();
+            }
+        });
+    }
+
+    cargarJson();
+
     //Recogemos los campos del formulario
     let nombre=$('#nombre');
     let tel=$('#telefono');
@@ -109,92 +128,95 @@ $(document).ready(function(){
 
     //Apartado 2(leemos productos desde un archivo json) y 3(testimonios)
 
-    $.getJSON("listado.json", function(listado){
+    function productos(){
 
-        let productos=listado.productos;
+        $.getJSON("listado.json", function(listado){
 
-        //creamos las secciones con DOM
-
-        //Para productos
-        let apartadoProductos=document.getElementById("apartadoProductos");
-
-        let leyendaProductos=document.createElement("legend");
-        leyendaProductos.innerHTML="<h2>Productos</h2>";
-        apartadoProductos.appendChild(leyendaProductos);
-
-        //--------------------------------------------------
-
-        //rellenamos las secciones
-
-
-        //Seccion de productos:
-        for(let i=0;i<productos.length;i++){
-
-            //Creamos el titulo
-            let titulo=document.createElement("h3");
-            titulo.textContent=productos[i].titulo;
-
-            //Creamos el texto
-            let texto=document.createElement("p");
-            texto.textContent=productos[i].texto;
-
-            //El link con su href
-            let link=document.createElement("a");
-            link.href=productos[i].link;
-            link.textContent=productos[i].link;
-
-            //Creamos la imagen adaptando las propiedades de tamaño
-            let img=document.createElement("img");
-            img.src=productos[i].img;
-            img.width=100;
-            img.height=100;
-
-            //Anexamos estos elementos al apartado correspondiente
-            apartadoProductos.appendChild(titulo);
-            apartadoProductos.appendChild(texto);
-            apartadoProductos.appendChild(link);
-            apartadoProductos.appendChild(img);
-
-            //---------------Tabla---------------
-
-            //Tbody de la tabla para añadir los campos
-            let tbody=document.getElementById("testTabla");
-
-            //creamos los elementos a añadir a la tabla
-            let tr=document.createElement("tr");
-            let tdTitulo=document.createElement("td");
-            tdTitulo.textContent=productos[i].titulo;
-
-
-            let tdTexto=document.createElement("td");
-            tdTexto.textContent=productos[i].texto;
-
-            let tdLink=document.createElement("td");
-            let url=document.createElement("a");
-            url.href=productos[i].link;
-            url.textContent=productos[i].link;
-            tdLink.appendChild(url);
-
-            let tdImg=document.createElement("td");
-            let imagen=document.createElement("img");
-            imagen.src=productos[i].img;
-            imagen.width=100;
-            imagen.height=100;
-            tdImg.appendChild(imagen);
-
-            tr.appendChild(tdTitulo);
-            tr.appendChild(tdTexto);
-            tr.appendChild(tdLink);
-            tr.appendChild(tdImg);
-
-            tbody.appendChild(tr);
-
-            //-------------------------------------
-
-        }
-
-
-    });
+            let productos=listado.productos;
+    
+            //creamos las secciones con DOM
+    
+            //Para productos
+            let apartadoProductos=document.getElementById("apartadoProductos");
+    
+            let leyendaProductos=document.createElement("legend");
+            leyendaProductos.innerHTML="<h2>Productos</h2>";
+            apartadoProductos.appendChild(leyendaProductos);
+    
+            //--------------------------------------------------
+    
+            //rellenamos las secciones
+    
+    
+            //Seccion de productos:
+            for(let i=0;i<productos.length;i++){
+    
+                //Creamos el titulo
+                let titulo=document.createElement("h3");
+                titulo.textContent=productos[i].titulo;
+    
+                //Creamos el texto
+                let texto=document.createElement("p");
+                texto.textContent=productos[i].texto;
+    
+                //El link con su href
+                let link=document.createElement("a");
+                link.href=productos[i].link;
+                link.textContent=productos[i].link;
+    
+                //Creamos la imagen adaptando las propiedades de tamaño
+                let img=document.createElement("img");
+                img.src=productos[i].img;
+                img.width=100;
+                img.height=100;
+    
+                //Anexamos estos elementos al apartado correspondiente
+                apartadoProductos.appendChild(titulo);
+                apartadoProductos.appendChild(texto);
+                apartadoProductos.appendChild(link);
+                apartadoProductos.appendChild(img);
+    
+                //---------------Tabla---------------
+    
+                //Tbody de la tabla para añadir los campos
+                let tbody=document.getElementById("testTabla");
+    
+                //creamos los elementos a añadir a la tabla
+                let tr=document.createElement("tr");
+                let tdTitulo=document.createElement("td");
+                tdTitulo.textContent=productos[i].titulo;
+    
+    
+                let tdTexto=document.createElement("td");
+                tdTexto.textContent=productos[i].texto;
+    
+                let tdLink=document.createElement("td");
+                let url=document.createElement("a");
+                url.href=productos[i].link;
+                url.textContent=productos[i].link;
+                tdLink.appendChild(url);
+    
+                let tdImg=document.createElement("td");
+                let imagen=document.createElement("img");
+                imagen.src=productos[i].img;
+                imagen.width=100;
+                imagen.height=100;
+                tdImg.appendChild(imagen);
+    
+                tr.appendChild(tdTitulo);
+                tr.appendChild(tdTexto);
+                tr.appendChild(tdLink);
+                tr.appendChild(tdImg);
+    
+                tbody.appendChild(tr);
+    
+                //-------------------------------------
+    
+            }
+    
+    
+        });
+    }
 
     //Apartado 4
 
@@ -308,6 +330,7 @@ $(document).ready(function(){
     }
 
     //Apartado 5
+
     
     $('#cambiarVista').click(function(){
 
@@ -315,7 +338,8 @@ $(document).ready(function(){
             $('#apartadoProductos').hide("slow");
             $('#testimoniosAjax').hide("slow");
             $('#vistaTablaProductos').show("slow"); 
-            $('#tablaTestimonio').show("slow"); 
+            $('#tablaTestimonio').show("slow");
+        
         }else{
             $('#apartadoProductos').show("slow");
             $('#testimoniosAjax').show("slow");
@@ -332,9 +356,45 @@ $(document).ready(function(){
     });
 
 
+    //Apartado 8
+    
+    $(window).scroll(function () {
+
+        let $productos = $("#apartadoProductos");
+        let $testimonios = $("#testimoniosAjax");
+
+        if ($productos.offset().top - $(window).scrollTop() < $(window).height()) {
+            if($('#vistaTablaProductos').is(':hidden')){
+                $('#apartadoProductos').show("slow");
+            }
+        }
+        if ($testimonios.offset().top - $(window).scrollTop() < $(window).height()) {
+            if($('#tablaTestimonio').is(':hidden')){
+                $('#testimoniosAjax').show("slow");
+            }
+        }
+    });
+
+    $(window).scroll(function () {
+
+        let $productos = $("#vistaTablaProductos");
+        let $testimonios = $("#tablaTestimonio");
+
+        if ($productos.offset().top - $(window).scrollTop() < $(window).height()) {
+            if($("#apartadoProductos").is(':hidden')){
+                $('#vistaTablaProductos').show("slow");
+            }
+        }
+        if ($testimonios.offset().top - $(window).scrollTop() < $(window).height()) {
+            if($("#testimoniosAjax").is(':hidden')){
+                $('#tablaTestimonio').show("slow");
+            }
+        }
+
+    });
+
     //Apartado 9
 
-    tablaRand();
     setInterval(limpiar,10000);
     setInterval(tablaRand,10000);
     
